@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Find me on Instagram</title>
+  <meta name="description" content="Sleek high‑tech landing page linking to my Instagram profile." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#05060a;
+      --bg2:#0c1220;
+      --neon:#00ffd1;
+      --accent:#7aa7ff;
+      --glass:rgba(255,255,255,0.06);
+      --glass-stroke:rgba(255,255,255,0.12);
+      --text:#e6f0ff;
+      --muted:#aab8d1;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      color:var(--text);
+      font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      background: radial-gradient(1200px 800px at 20% -10%, #10203d 0%, transparent 60%),
+                  radial-gradient(1000px 600px at 120% 120%, #1a2a55 0%, transparent 60%),
+                  linear-gradient(180deg, var(--bg1), var(--bg2));
+      overflow:hidden;
+    }
+
+    /* Animated tech grid */
+    .grid{
+      position:fixed; inset:0; pointer-events:none; opacity:0.28; filter:drop-shadow(0 0 8px rgba(0,255,209,.3));
+      background-image:
+        repeating-linear-gradient( to right, rgba(0,255,209,.12) 0 1px, transparent 1px 80px),
+        repeating-linear-gradient( to bottom, rgba(0,255,209,.12) 0 1px, transparent 1px 80px);
+      transform: perspective(900px) rotateX(60deg) translateY(-20vh) scale(1.4);
+      animation: drift 18s linear infinite;
+    }
+    @keyframes drift { to { background-position: 200px 200px; } }
+
+    /* floating particles */
+    .particles{ position:fixed; inset:0; pointer-events:none; }
+    .dot{ position:absolute; width:3px; height:3px; border-radius:50%; background:var(--neon); box-shadow:0 0 12px var(--neon); opacity:.7; filter:saturate(140%)}
+
+    /* center layout */
+    .wrap{
+      position:relative; height:100%; display:grid; place-items:center; padding:24px;
+    }
+
+    .card{
+      position:relative;
+      width:min(720px, 90vw);
+      border-radius:24px;
+      padding:28px clamp(20px,4vw,44px);
+      background: linear-gradient( to bottom right, rgba(10,18,35,.65), rgba(10,18,35,.35) );
+      backdrop-filter: blur(16px) saturate(120%);
+      border:1px solid var(--glass-stroke);
+      box-shadow: 0 10px 40px rgba(0,0,0,.4), inset 0 0 0 1px rgba(255,255,255,.03);
+      overflow:hidden;
+    }
+    .card:before{
+      content:""; position:absolute; inset:-2px; border-radius:inherit; pointer-events:none;
+      background: conic-gradient(from 0deg, transparent 0 340deg, rgba(0,255,209,.6) 350deg 360deg);
+      filter: blur(12px); opacity:.55; z-index:0;
+      animation: spin 10s linear infinite;
+    }
+    @keyframes spin{ to{ transform: rotate(360deg);} }
+
+    .badge{
+      display:inline-flex; align-items:center; gap:8px; font: 600 12px/1 Inter, sans-serif; letter-spacing:.12em; text-transform:uppercase;
+      color:var(--muted); background:rgba(122,167,255,.08); border:1px solid rgba(122,167,255,.25); padding:8px 12px; border-radius:999px;
+      backdrop-filter: blur(6px);
+    }
+    .pulse{ width:8px; height:8px; background:var(--neon); border-radius:50%; box-shadow:0 0 10px var(--neon); animation:blink 1.4s ease-in-out infinite; }
+    @keyframes blink{ 0%,100%{opacity:.25} 50%{opacity:1} }
+
+    h1{
+      font-family:Orbitron,Inter,system-ui; font-weight:700; font-size: clamp(32px, 5vw, 64px); margin:18px 0 10px; letter-spacing:.02em;
+      text-shadow: 0 0 24px rgba(0,255,209,.35);
+    }
+    .handle{
+      font: 600 clamp(18px,2.6vw,26px)/1.3 Inter, sans-serif; color:var(--text);
+      display:flex; align-items:center; gap:10px; margin:8px 0 18px;
+    }
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; color:#bfe9ff; }
+
+    .cta{
+      display:flex; flex-wrap:wrap; gap:12px; margin-top:10px;
+    }
+    .btn{
+      appearance:none; border:none; cursor:pointer; border-radius:14px; padding:14px 18px; font-weight:700; letter-spacing:.02em;
+      background:linear-gradient(180deg, #0efbda, #00d1b5); color:#052126; box-shadow:0 6px 20px rgba(0,255,209,.35), inset 0 0 0 1px rgba(0,0,0,.2);
+      transition: transform .12s ease, box-shadow .12s ease; text-decoration:none; display:inline-flex; align-items:center; gap:10px;
+    }
+    .btn:hover{ transform: translateY(-2px); box-shadow:0 10px 26px rgba(0,255,209,.45); }
+
+    .btn.secondary{
+      background:transparent; color:var(--text); border:1px solid rgba(255,255,255,.18);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.04), 0 6px 16px rgba(0,0,0,.25);
+    }
+
+    .hint{ color:var(--muted); font-size:14px; margin-top:12px }
+
+    /* Glitch accent */
+    .glitch{ position:relative; display:inline-block }
+    .glitch::before, .glitch::after{
+      content: attr(data-text); position:absolute; left:0; top:0; width:100%; overflow:hidden; clip-path: inset(0 0 0 0);
+    }
+    .glitch::before{ transform: translate(2px, -1px); color:#7aa7ff; opacity:.7; mix-blend:screen; }
+    .glitch::after{ transform: translate(-2px, 1px); color:#00ffd1; opacity:.7; mix-blend:screen; }
+    .glitch:hover::before{ animation: slice 900ms steps(12) infinite; }
+    .glitch:hover::after{ animation: slice 900ms steps(10) reverse infinite; }
+    @keyframes slice{
+      0%{ clip-path: inset(0 0 85% 0) }
+      10%{ clip-path: inset(10% 0 70% 0) }
+      20%{ clip-path: inset(30% 0 50% 0) }
+      30%{ clip-path: inset(50% 0 30% 0) }
+      40%{ clip-path: inset(70% 0 10% 0) }
+      50%{ clip-path: inset(0 0 80% 0) }
+      60%{ clip-path: inset(20% 0 60% 0) }
+      70%{ clip-path: inset(40% 0 40% 0) }
+      80%{ clip-path: inset(60% 0 20% 0) }
+      90%{ clip-path: inset(80% 0 0 0) }
+      100%{ clip-path: inset(0 0 85% 0) }
+    }
+
+    footer{ position:fixed; bottom:10px; width:100%; text-align:center; color:var(--muted); font-size:12px; opacity:.8 }
+  </style>
+</head>
+<body>
+  <div class="grid" aria-hidden="true"></div>
+  <div class="particles" aria-hidden="true" id="particles"></div>
+
+  <main class="wrap">
+    <section class="card" role="region" aria-label="Instagram Link Card">
+      <span class="badge"><span class="pulse" aria-hidden="true"></span> CONNECT • INSTAGRAM</span>
+      <h1>
+        <span class="glitch" data-text="Let’s Link Up">Let’s Link Up</span>
+      </h1>
+      <p class="handle">Your Insta: <span id="handle" class="mono">@your_insta</span></p>
+      <div class="cta">
+        <a id="openBtn" class="btn" target="_blank" rel="noopener" href="#" aria-label="Open Instagram profile">
+          <!-- icon -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Zm10.5 3a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3ZM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6Z"/></svg>
+          Open Instagram
+        </a>
+        <button class="btn secondary" id="copyBtn" aria-label="Copy handle to clipboard">
+          <!-- copy icon -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 1H8a2 2 0 0 0-2 2v2H5a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 18H5V7h8Zm3-3h-1V5H9V3h7Z"/></svg>
+          Copy Handle
+        </button>
+      </div>
+      <p class="hint">Tip: Add <span class="mono">?u=your_handle</span> to the page URL to set it without editing the file.</p>
+    </section>
+  </main>
+
+  <footer>© <span id="year"></span> • High‑tech Neon UI</footer>
+
+  <script>
+    // --- Config: default handle if no URL param ---
+    const DEFAULT_HANDLE = "your_insta"; // ← replace this once if you prefer
+
+    // read ?u= param for the handle
+    const params = new URLSearchParams(location.search);
+    const raw = (params.get('u') || DEFAULT_HANDLE).trim();
+    const handle = raw.replace(/^@+/, '');
+
+    // set text and href
+    const handleEl = document.getElementById('handle');
+    const btn = document.getElementById('openBtn');
+    handleEl.textContent = '@' + handle;
+    btn.href = 'https://instagram.com/' + encodeURIComponent(handle);
+
+    // copy button
+    const copyBtn = document.getElementById('copyBtn');
+    copyBtn.addEventListener('click', async () => {
+      try{
+        await navigator.clipboard.writeText('@' + handle);
+        copyBtn.textContent = 'Copied!';
+        setTimeout(()=>copyBtn.textContent='Copy Handle', 1200);
+      }catch(e){
+        alert('Copy failed. Handle: @' + handle);
+      }
+    });
+
+    // particles
+    const pRoot = document.getElementById('particles');
+    const W = window.innerWidth, H = window.innerHeight;
+    const COUNT = Math.min(80, Math.floor((W*H)/18000));
+
+    function rand(min,max){return Math.random()*(max-min)+min}
+    for(let i=0;i<COUNT;i++){
+      const d=document.createElement('div'); d.className='dot';
+      d.style.left = rand(0,W)+'px'; d.style.top = rand(0,H)+'px';
+      d.style.opacity= rand(.3,.9);
+      const scale = rand(.6,1.4); d.style.transform = `scale(${scale})`;
+      const duration = rand(6,14);
+      d.animate([
+        { transform: `translateY(0) scale(${scale})`, opacity:d.style.opacity },
+        { transform: `translateY(${rand(-40,40)}px) translateX(${rand(-30,30)}px) scale(${scale})`, opacity: rand(.2,1) }
+      ],{ duration: duration*1000, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
+      pRoot.appendChild(d);
+    }
+
+    // year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
